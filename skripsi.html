@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penelitian Mahasiswa · Psikologi Islam</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#E8EDF8', 100: '#C5D2F0', 200: '#9DB5E8',
+                            300: '#6F95E0', 400: '#4F7FD8', 500: '#2A5CC4',
+                            600: '#1A3F8F', 700: '#122B6A', 800: '#0B1D45',
+                            900: '#060F28', 950: '#030714',
+                        },
+                        gold: '#D4AF37',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060F28;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .glass-nav {
+            background: rgba(11, 29, 69, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(79, 143, 255, 0.15);
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .btn-nav-home {
+            background: rgba(255, 255, 255, 0.04);
+            color: #94a3b8;
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .btn-nav-home:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .btn-nav-tree {
+            background: rgba(82, 183, 136, 0.06);
+            color: #52B788;
+            border-color: rgba(82, 183, 136, 0.1);
+        }
+        .btn-nav-tree:hover {
+            background: rgba(82, 183, 136, 0.12);
+            border-color: #52B788;
+            transform: translateY(-2px);
+        }
+        .btn-nav-roadmap {
+            background: rgba(212, 175, 55, 0.06);
+            color: #D4AF37;
+            border-color: rgba(212, 175, 55, 0.1);
+        }
+        .btn-nav-roadmap:hover {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: #D4AF37;
+            transform: translateY(-2px);
+        }
+        .btn-nav-drive {
+            background: rgba(26, 115, 232, 0.08);
+            color: #4F7FD8;
+            border-color: rgba(26, 115, 232, 0.1);
+        }
+        .btn-nav-drive:hover {
+            background: rgba(26, 115, 232, 0.15);
+            border-color: #4F7FD8;
+            transform: translateY(-2px);
+        }
+        .btn-nav-repo {
+            background: rgba(139, 92, 246, 0.08);
+            color: #a78bfa;
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+        .btn-nav-repo:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #a78bfa;
+            transform: translateY(-2px);
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 4px;
+            font-size: 0.8rem;
+            padding: 8px 0;
+        }
+        .breadcrumb a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .breadcrumb a:hover {
+            color: #D4AF37;
+        }
+        .breadcrumb .separator {
+            color: #475569;
+            font-size: 0.6rem;
+            margin: 0 2px;
+        }
+        .breadcrumb .current {
+            color: #e2e8f0;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb .current i {
+            color: #D4AF37;
+            font-size: 0.9rem;
+        }
+
+        .card-glass {
+            background: rgba(11, 29, 69, 0.4);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .card-glass:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-card {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .stat-card:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        .table-wrap thead {
+            background: rgba(11, 29, 69, 0.6);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+        }
+        .table-wrap thead th {
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #D4AF37;
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .table-wrap tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s ease;
+        }
+        .table-wrap tbody tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .table-wrap tbody td {
+            padding: 8px 12px;
+            color: #cbd5e1;
+            vertical-align: middle;
+        }
+        .table-wrap tbody td:first-child {
+            font-weight: 600;
+            color: #e2e8f0;
+            text-align: center;
+        }
+        .table-wrap tfoot tr {
+            background: rgba(11, 29, 69, 0.5);
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        .table-wrap tfoot td {
+            padding: 10px 12px;
+            color: #D4AF37;
+            font-weight: 700;
+        }
+
+        .chart-box {
+            background: rgba(11, 29, 69, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .badge-kluster {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            background: rgba(212, 175, 55, 0.08);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .hm-cell {
+            padding: 6px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.65rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .hm-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+        }
+
+        .filter-select {
+            background-color: rgba(11, 29, 69, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .filter-select:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
+        }
+        .filter-select option {
+            background-color: #0B1D45;
+            color: #e2e8f0;
+        }
+
+        .analysis-narrative {
+            background: linear-gradient(135deg, rgba(11, 29, 69, 0.8), rgba(26, 63, 143, 0.2));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 28px 32px;
+        }
+        .analysis-narrative h3 {
+            color: #D4AF37;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .analysis-narrative p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .analysis-narrative strong {
+            color: #fff;
+        }
+        .analysis-narrative .highlight {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .breadcrumb { font-size: 0.7rem; }
+            .btn-nav { font-size: 0.65rem; padding: 4px 10px; }
+            .table-wrap table { font-size: 0.6rem; }
+            .table-wrap thead th, .table-wrap tbody td { padding: 4px 6px; }
+            .filter-select { font-size: 0.6rem; padding: 2px 8px; }
+            .hm-cell { font-size: 0.5rem; padding: 4px 2px; }
+            .analysis-narrative { padding: 16px 18px; }
+            .analysis-narrative p { font-size: 0.8rem; }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: #fff; color: #000; }
+            .card-glass { background: #f1f5f9; border-color: #cbd5e1; }
+            .stat-card { background: #f1f5f9; border-color: #cbd5e1; }
+            .chart-box { background: #f1f5f9; border-color: #cbd5e1; }
+            .table-wrap { border-color: #cbd5e1; }
+            .table-wrap thead { background: #e2e8f0; }
+            .table-wrap thead th { color: #1e293b; }
+            .table-wrap tbody td { color: #1e293b; }
+            .table-wrap tbody tr { border-color: #e2e8f0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================== -->
+    <!-- NAVBAR DENGAN BREADCRUMB                                   -->
+    <!-- ========================================================== -->
+    <nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-3 gap-2">
+
+                <!-- Breadcrumb -->
+                <div class="breadcrumb">
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/" title="Kembali ke Home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                    <a href="https://pi-iainbabel.github.io/penelitian/" title="Kembali ke Penelitian">
+                        <i class="fas fa-flask"></i> Penelitian
+                    </a>
+                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">
+                        <i class="fas fa-user-graduate"></i> Penelitian Mahasiswa
+                    </span>
+                </div>
+
+                <!-- Tombol navigasi kanan -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <a href="https://pi-iainbabel.github.io/riset-pkm/" target="_blank" class="btn-nav btn-nav-roadmap" title="Lihat Roadmap Riset">
+                        <i class="fas fa-map"></i> Roadmap
+                    </a>
+                    <a href="https://drive.google.com/drive/u/1/folders/1GbBrsliy96iQo-NVZFsQZXRqjjUN_4rV" target="_blank" class="btn-nav btn-nav-drive" title="Drive Bukti Skripsi">
+                        <i class="fas fa-folder-open"></i> Drive Bukti
+                    </a>
+                    <a href="https://repository.iainsasbabel.ac.id/" target="_blank" class="btn-nav btn-nav-repo" title="Repository IAIN SAS">
+                        <i class="fas fa-archive"></i> Repository
+                    </a>
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/struktur-konten.html" class="btn-nav btn-nav-tree" title="Pohon Pengetahuan">
+                        <i class="fas fa-tree"></i> Tree
+                    </a>
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/" class="btn-nav btn-nav-home" title="Kembali ke Home">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================================== -->
+    <!-- SPACER                                                     -->
+    <!-- ========================================================== -->
+    <div class="pt-20"></div>
+
+    <!-- ===== HERO ===== -->
+    <section class="pt-8 pb-6 px-4 text-center bg-gradient-to-b from-navy-900 to-navy-950 border-b border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-semibold tracking-wider mb-4">
+                <i class="fas fa-graduation-cap mr-2"></i> SKRIPSI MAHASISWA
+            </div>
+            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-white leading-tight">
+                Penelitian <span class="text-gold">Mahasiswa</span>
+            </h1>
+            <p class="mt-3 text-slate-400 max-w-2xl mx-auto text-sm">
+                Analisis 124 Skripsi Program Studi Psikologi Islam · 2023–2026
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs">
+                <span class="px-4 py-1.5 rounded-full bg-navy-800/60 border border-white/5 text-slate-300">
+                    <i class="fas fa-file-alt text-gold mr-1.5"></i> 124 Skripsi
+                </span>
+                <span class="px-4 py-1.5 rounded-full bg-navy-800/60 border border-white/5 text-slate-300">
+                    <i class="fas fa-layer-group text-gold mr-1.5"></i> 11 Kluster
+                </span>
+                <span class="px-4 py-1.5 rounded-full bg-navy-800/60 border border-white/5 text-slate-300">
+                    <i class="fas fa-calendar-alt text-gold mr-1.5"></i> 2023–2026
+                </span>
+                <span class="px-4 py-1.5 rounded-full bg-emerald-400/20 border border-emerald-400/30 text-emerald-300">
+                    <i class="fas fa-check-circle mr-1.5"></i> 6 Prioritas Unggulan
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATISTIK ===== -->
+    <section class="py-6 px-4 bg-navy-900/50 border-b border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-gold">124</div>
+                    <div class="text-xs text-slate-400">Total Skripsi</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-gold">11</div>
+                    <div class="text-xs text-slate-400">Kluster Tema</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-emerald-400">6</div>
+                    <div class="text-xs text-slate-400">Prioritas Unggulan</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-sky-400">4</div>
+                    <div class="text-xs text-slate-400">Tahun (2023–2026)</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-purple-400">10</div>
+                    <div class="text-xs text-slate-400">Dosen Pembimbing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- ===== GRAFIK DISTRIBUSI PER TAHUN ===== -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="chart-box">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-heading font-bold text-white text-sm">
+                            <i class="fas fa-chart-bar text-gold mr-2"></i> Distribusi Skripsi per Tahun
+                        </h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5">124 skripsi (2023–2026)</p>
+                    </div>
+                </div>
+                <div class="relative" style="height:280px;">
+                    <canvas id="tahunChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-box">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-heading font-bold text-white text-sm">
+                            <i class="fas fa-chart-pie text-gold mr-2"></i> Distribusi per Kluster
+                        </h3>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Topik penelitian mahasiswa</p>
+                    </div>
+                </div>
+                <div class="relative" style="height:280px;">
+                    <canvas id="klusterChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HEATMAP SIMILARITAS ANTAR KLUSTER ===== -->
+        <div class="card-glass p-6 border-gold/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                <div>
+                    <h3 class="font-heading font-bold text-white text-sm flex items-center gap-2">
+                        <i class="fas fa-th text-gold"></i> Matriks Similaritas Antar Kluster
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Berdasarkan analisis kemiripan tematik skripsi</p>
+                </div>
+                <span class="text-[10px] text-slate-500 italic">Semakin tinggi nilai (hijau) = semakin mirip</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-center border-collapse text-xs">
+                    <thead>
+                        <tr class="border-b border-gold/20">
+                            <th class="p-2 text-left text-gold font-bold">Kluster</th>
+                            <th class="p-2 text-gold font-bold">Perkembangan</th>
+                            <th class="p-2 text-gold font-bold">Keluarga</th>
+                            <th class="p-2 text-gold font-bold">Digital</th>
+                            <th class="p-2 text-gold font-bold">Positif</th>
+                            <th class="p-2 text-gold font-bold">Organisasi</th>
+                            <th class="p-2 text-gold font-bold">Pendidikan</th>
+                            <th class="p-2 text-gold font-bold">Psikologi Islam</th>
+                            <th class="p-2 text-gold font-bold">Sosial</th>
+                            <th class="p-2 text-gold font-bold">Moderasi</th>
+                            <th class="p-2 text-gold font-bold">Gender</th>
+                            <th class="p-2 text-gold font-bold">Inklusif</th>
+                        </tr>
+                    </thead>
+                    <tbody id="heatmapBody">
+                        <!-- diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-3 text-[10px] text-slate-500 text-center">
+                <i class="fas fa-info-circle mr-1"></i> Nilai berdasarkan matriks similaritas dari analisis kluster
+            </div>
+        </div>
+
+        <!-- ===== SUBJEK PENELITIAN TERPOPULER ===== -->
+        <div class="card-glass p-6 border-gold/10">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h3 class="font-heading font-bold text-white text-sm flex items-center gap-2">
+                        <i class="fas fa-users text-gold"></i> Subjek Penelitian Terpopuler
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Populasi/subjek yang paling sering diteliti</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div class="bg-navy-800/30 rounded-xl p-3 text-center border border-white/5 hover:border-gold/30 transition">
+                    <div class="text-xl font-bold text-gold">29</div>
+                    <div class="text-[10px] text-slate-400">Mahasiswa</div>
+                </div>
+                <div class="bg-navy-800/30 rounded-xl p-3 text-center border border-white/5 hover:border-gold/30 transition">
+                    <div class="text-xl font-bold text-gold">24</div>
+                    <div class="text-[10px] text-slate-400">Remaja</div>
+                </div>
+                <div class="bg-navy-800/30 rounded-xl p-3 text-center border border-white/5 hover:border-gold/30 transition">
+                    <div class="text-xl font-bold text-gold">18</div>
+                    <div class="text-[10px] text-slate-400">Siswa SMA</div>
+                </div>
+                <div class="bg-navy-800/30 rounded-xl p-3 text-center border border-white/5 hover:border-gold/30 transition">
+                    <div class="text-xl font-bold text-gold">12</div>
+                    <div class="text-[10px] text-slate-400">Orang Tua</div>
+                </div>
+                <div class="bg-navy-800/30 rounded-xl p-3 text-center border border-white/5 hover:border-gold/30 transition">
+                    <div class="text-xl font-bold text-gold">10</div>
+                    <div class="text-[10px] text-slate-400">Guru</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TABEL REKAPITULASI SKRIPSI ===== -->
+        <div class="card-glass p-6 border-gold/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                <div>
+                    <h3 class="font-heading font-bold text-white text-sm flex items-center gap-2">
+                        <i class="fas fa-list-ul text-gold"></i> Rekapitulasi Skripsi per Kluster
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5">124 skripsi dikelompokkan ke dalam 11 kluster tematik</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <select id="filterKluster" onchange="filterTable()" class="filter-select">
+                        <option value="all">Semua Kluster</option>
+                        <option value="Perkembangan">Perkembangan Anak & Remaja</option>
+                        <option value="Keluarga">Keluarga & Kesehatan Mental</option>
+                        <option value="Digital">Digital & Perilaku Teknologi</option>
+                        <option value="Positif">Positive Psychology</option>
+                        <option value="Organisasi">Psikologi Organisasi</option>
+                        <option value="Pendidikan">Psikologi Pendidikan</option>
+                        <option value="Psikologi Islam">Psikologi Islam</option>
+                        <option value="Sosial">Psikologi Sosial</option>
+                        <option value="Moderasi">Moderasi Beragama</option>
+                        <option value="Gender">Gender & Kekerasan</option>
+                        <option value="Inklusif">Inklusif & ABK</option>
+                    </select>
+                    <input type="text" id="searchSkripsi" onkeyup="filterTable()" placeholder="Cari judul..." class="filter-select w-40" />
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-12 text-center">No</th>
+                            <th class="text-left min-w-[160px]">Judul Skripsi</th>
+                            <th class="text-center">Tahun</th>
+                            <th class="text-center">Kluster</th>
+                            <th class="text-center">Subjek</th>
+                        </tr>
+                    </thead>
+                    <tbody id="skripsiTableBody">
+                        <!-- diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-3 text-[10px] text-slate-500 text-center">
+                <i class="fas fa-info-circle mr-1"></i> Data diambil dari 124 skripsi mahasiswa Psikologi Islam periode 2023–2026
+            </div>
+        </div>
+
+        <!-- ===== NARASI ANALISIS ===== -->
+        <div class="analysis-narrative">
+            <h3>
+                <i class="fas fa-chart-line"></i> Analisis Penelitian Mahasiswa
+            </h3>
+            <p>
+                Berdasarkan analisis terhadap <strong class="text-white">124 skripsi</strong> mahasiswa Program Studi Psikologi Islam periode 2023–2026, ditemukan <span class="highlight">11 kluster tematik</span> yang mencerminkan arah riset mahasiswa. Tiga kluster terbesar adalah <strong class="text-emerald-400">Perkembangan Anak & Remaja</strong> (23 skripsi), <strong class="text-emerald-400">Keluarga & Kesehatan Mental</strong> (21 skripsi), dan <strong class="text-emerald-400">Digital & Perilaku Teknologi</strong> (19 skripsi). Hal ini menunjukkan bahwa mahasiswa memiliki ketertarikan yang tinggi pada isu-isu <span class="highlight">perkembangan manusia</span> dan <span class="highlight">dampak teknologi</span> terhadap kesehatan mental.
+            </p>
+
+            <p>
+                <strong class="text-gold">1. Tren Riset Mahasiswa:</strong>
+                Dari 4 tahun pengamatan (2023–2026), terjadi <strong class="text-white">peningkatan jumlah skripsi</strong> dari 20 (2023) menjadi 35 (2024), 38 (2025), dan 31 (2026). Puncak produktivitas terjadi pada tahun 2025, yang bertepatan dengan <span class="highlight">penguatan implementasi riset</span> dalam roadmap prodi.
+            </p>
+
+            <p>
+                <strong class="text-gold">2. Subjek Penelitian:</strong>
+                Subjek yang paling sering diteliti adalah <strong class="text-white">mahasiswa</strong> (29 skripsi), diikuti <strong class="text-white">remaja</strong> (24), dan <strong class="text-white">siswa SMA</strong> (18). Hal ini mencerminkan <span class="highlight">keterlibatan mahasiswa dalam meneliti kelompok sebaya</span> dan isu-isu yang relevan dengan transisi perkembangan.
+            </p>
+
+            <p>
+                <strong class="text-gold">3. Similaritas Antar Kluster:</strong>
+                Matriks similaritas menunjukkan bahwa kluster <strong class="text-emerald-400">Psikologi Islam</strong> memiliki kemiripan tinggi dengan <strong class="text-emerald-400">Moderasi Beragama</strong> (0.82) dan <strong class="text-emerald-400">Positive Psychology</strong> (0.78). Sementara itu, kluster <strong class="text-gold">Gender & Kekerasan</strong> cenderung lebih <span class="text-amber-400">terisolasi</span> dengan similaritas rendah terhadap kluster lain — menunjukkan bahwa isu gender masih menjadi topik yang <span class="highlight">kurang terintegrasi</span> dengan tema riset utama.
+            </p>
+
+            <p>
+                <strong class="text-gold">4. Rekomendasi Strategis:</strong>
+                Untuk mendorong <span class="highlight">integrasi riset</span>, disarankan untuk memperkuat kolaborasi antar kluster, terutama antara <strong class="text-white">Psikologi Islam</strong> dengan <strong class="text-white">Positive Psychology</strong> dan <strong class="text-white">Keluarga</strong>. Selain itu, penting untuk <strong class="text-white">meningkatkan jumlah penelitian</strong> pada kluster yang masih rendah (Moderasi, Gender) melalui program <span class="text-gold">"Research Grant Mahasiswa"</span> dan pendampingan dosen pembimbing.
+            </p>
+
+            <p class="text-[10px] text-slate-400 mt-2 border-t border-gold/20 pt-2">
+                <i class="fas fa-info-circle mr-1"></i> Data ini diolah dari 124 skripsi mahasiswa Psikologi Islam 2023–2026.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="border-t border-white/5 bg-navy-900/50 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+            <p class="text-xs text-slate-500">
+                &copy; 2024 Program Studi Psikologi Islam · FDKI · IAIN Syaikh Abdurrahman Siddik Bangka Belitung
+            </p>
+            <p class="text-[10px] text-slate-600 mt-1">Data bersumber dari 124 skripsi mahasiswa 2023–2026</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                   -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== DATA SKRIPSI =====
+        const skripsiData = [
+            // 2023
+            { id: 1, judul: 'Pola asuh orang tua pada anak yang bermain game online', tahun: 2023, kluster: 'Perkembangan',
+                subjek: 'Orang Tua' },
+            { id: 2, judul: 'Pengaruh kontrol diri terhadap perilaku adiksi belanja online', tahun: 2023, kluster: 'Digital',
+                subjek: 'Mahasiswa' },
+            { id: 3, judul: 'Hubungan kematangan emosi dengan kemampuan penyelesaian masalah', tahun: 2023,
+                kluster: 'Perkembangan', subjek: 'Remaja' },
+            { id: 4, judul: 'Pengaruh pelatihan kemampuan asertif terhadap pencegahan merokok', tahun: 2023,
+                kluster: 'Perkembangan', subjek: 'Siswa' },
+            { id: 5, judul: 'Psychological well-being ibu yang memiliki anak berkebutuhan khusus', tahun: 2023,
+                kluster: 'Inklusif', subjek: 'Orang Tua' },
+            { id: 6, judul: 'Pengaruh Pelatihan Santri Mandiri terhadap penyesuaian diri santri', tahun: 2023,
+                kluster: 'Pendidikan', subjek: 'Santri' },
+            { id: 7, judul: 'Kebermaknaan hidup pada penderita diabetes melitus', tahun: 2023, kluster: 'Positif',
+                subjek: 'Pasien' },
+            { id: 8, judul: 'Proses penerimaan diri waria yang bekerja di salon', tahun: 2023, kluster: 'Gender',
+                subjek: 'Waria' },
+            { id: 9, judul: 'Hubungan fanatisme K-Pop dan kemampuan mengelola emosi', tahun: 2023, kluster: 'Digital',
+                subjek: 'Mahasiswa' },
+            { id: 10, judul: 'Dampak pola asuh otoriter terhadap perilaku antisosial remaja', tahun: 2023,
+                kluster: 'Keluarga', subjek: 'Remaja' },
+            { id: 11, judul: 'Hubungan self regulated learning dengan flow akademik', tahun: 2023, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            { id: 12, judul: 'Hubungan sense of humor dengan optimisme menghadapi pensiun', tahun: 2023, kluster: 'Positif',
+                subjek: 'ASN' },
+            { id: 13, judul: 'Hubungan empati dengan perilaku altruisme pada dewasa awal', tahun: 2023, kluster: 'Sosial',
+                subjek: 'Dewasa' },
+            { id: 14, judul: 'Pengaruh pendidikan seksual dan religiusitas terhadap perilaku seksual', tahun: 2023,
+                kluster: 'Psikologi Islam', subjek: 'Siswa' },
+            { id: 15, judul: 'Hubungan religiusitas dengan psychological well-being korban pelecehan', tahun: 2023,
+                kluster: 'Psikologi Islam', subjek: 'Siswa' },
+            { id: 16, judul: 'Hubungan regulasi diri mahasiswa dalam mengatasi radikalisme', tahun: 2023,
+                kluster: 'Moderasi', subjek: 'Mahasiswa' },
+            { id: 17, judul: 'Hubungan resiliensi dengan prokrastinasi akademik mahasiswa', tahun: 2023,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 18, judul: 'Penyesuaian diri pada pasangan yang menikah dini', tahun: 2023, kluster: 'Keluarga',
+                subjek: 'Pasangan' },
+            { id: 19, judul: 'Persepsi masyarakat terhadap waria', tahun: 2023, kluster: 'Gender', subjek: 'Masyarakat' },
+            { id: 20, judul: 'Upaya manajemen diri mahasiswa yang bekerja sambil kuliah', tahun: 2023, kluster: 'Organisasi',
+                subjek: 'Mahasiswa' },
+            // 2024
+            { id: 21, judul: 'Penerimaan orang tua terhadap terapi anak autisme', tahun: 2024, kluster: 'Inklusif',
+                subjek: 'Orang Tua' },
+            { id: 22, judul: 'Pengaruh konsep diri dan efikasi diri terhadap kematangan karier', tahun: 2024,
+                kluster: 'Pendidikan', subjek: 'Siswa' },
+            { id: 23, judul: 'Pengaruh kecanduan game online terhadap kontrol diri remaja', tahun: 2024, kluster: 'Digital',
+                subjek: 'Remaja' },
+            { id: 24, judul: 'Analisis intervensi kecerdasan emosional pasien rehabilitasi', tahun: 2024,
+                kluster: 'Psikologi Islam', subjek: 'Pasien' },
+            { id: 25, judul: 'Hubungan kematangan emosi terhadap kenakalan remaja', tahun: 2024, kluster: 'Perkembangan',
+                subjek: 'Remaja' },
+            { id: 26, judul: 'Hubungan stress management terhadap beban ganda istri', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Istri' },
+            { id: 27, judul: 'Dinamika psikologis pola asuh orang tua pada anak menikah dini', tahun: 2024,
+                kluster: 'Keluarga', subjek: 'Orang Tua' },
+            { id: 28, judul: 'Pengaruh kreativitas dan resiliensi terhadap coping stress', tahun: 2024, kluster: 'Positif',
+                subjek: 'Mahasiswa' },
+            { id: 29, judul: 'Kesejahteraan psikologis pada lansia di panti sosial', tahun: 2024, kluster: 'Positif',
+                subjek: 'Lansia' },
+            { id: 30, judul: 'Dinamika emosi siswa SMP yang bermain game online', tahun: 2024, kluster: 'Perkembangan',
+                subjek: 'Siswa' },
+            { id: 31, judul: 'Hubungan regulasi emosi dengan agresi verbal fanwar K-Pop', tahun: 2024, kluster: 'Digital',
+                subjek: 'Penggemar' },
+            { id: 32, judul: 'Manajemen diri dalam penjagaan hafalan Al-Qur\'an', tahun: 2024, kluster: 'Psikologi Islam',
+                subjek: 'Santri' },
+            { id: 33, judul: 'Penerapan pola asuh dalam mengantisipasi kenakalan remaja', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Siswa' },
+            { id: 34, judul: 'Pengaruh efikasi diri dan kecerdasan emosional terhadap berpikir kritis', tahun: 2024,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 35, judul: 'Analisis faktor penyebab penyalahgunaan alkohol pada remaja', tahun: 2024,
+                kluster: 'Perkembangan', subjek: 'Remaja' },
+            { id: 36, judul: 'Gambaran manajemen stres akademik mahasiswa bidikmisi', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Mahasiswa' },
+            { id: 37, judul: 'Model consumptive behavior mahasiswa game online', tahun: 2024, kluster: 'Digital',
+                subjek: 'Mahasiswa' },
+            { id: 38, judul: 'Hubungan mindfulness terhadap overthinking pada remaja', tahun: 2024, kluster: 'Positif',
+                subjek: 'Remaja' },
+            { id: 39, judul: 'Hubungan self esteem dengan kecemasan memilih pasangan', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Perempuan' },
+            { id: 40, judul: 'Dinamika kebersyukuran ibu yang memiliki anak berkebutuhan khusus', tahun: 2024,
+                kluster: 'Inklusif', subjek: 'Ibu' },
+            { id: 41, judul: 'Pengaruh media flash card terhadap kemampuan kognitif anak', tahun: 2024,
+                kluster: 'Pendidikan', subjek: 'Anak' },
+            { id: 42, judul: 'Dinamika psikologis istri yang menikah dini', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Istri' },
+            { id: 43, judul: 'Pengaruh self-esteem terhadap body dissatisfaction ibu pasca melahirkan', tahun: 2024,
+                kluster: 'Keluarga', subjek: 'Ibu' },
+            { id: 44, judul: 'Hubungan loneliness dengan quarter life crisis mahasiswa', tahun: 2024, kluster: 'Positif',
+                subjek: 'Mahasiswa' },
+            { id: 45, judul: 'Hubungan regulasi diri dengan prokrastinasi skripsi mahasiswa', tahun: 2024,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 46, judul: 'Hubungan body image dengan kepercayaan diri siswa', tahun: 2024, kluster: 'Perkembangan',
+                subjek: 'Siswa' },
+            { id: 47, judul: 'Kebermaknaan hidup penyandang tunanetra', tahun: 2024, kluster: 'Positif', subjek: 'Tunanetra' },
+            { id: 48, judul: 'Peran orangtua dalam mencegah kenakalan remaja', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Orang Tua' },
+            { id: 49, judul: 'Pengaruh gaya hidup hedonis terhadap kesehatan mental remaja', tahun: 2024,
+                kluster: 'Perkembangan', subjek: 'Remaja' },
+            { id: 50, judul: 'Pengalaman body shaming dan dampaknya pada remaja putri', tahun: 2024, kluster: 'Gender',
+                subjek: 'Remaja' },
+            { id: 51, judul: 'Korelasi regulasi diri dengan prokrastinasi skripsi FDKI', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Mahasiswa' },
+            { id: 52, judul: 'Hubungan fatherless dengan konsep diri siswa SMA', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Siswa' },
+            { id: 53, judul: 'Hubungan peran orang tua dengan kenakalan remaja', tahun: 2024, kluster: 'Keluarga',
+                subjek: 'Remaja' },
+            { id: 54, judul: 'Hubungan teacher support dengan student engagement', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            { id: 55, judul: 'Hubungan konformitas dengan prokrastinasi akademik', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Mahasiswa' },
+            { id: 56, judul: 'Gambaran beban psikologis caregiver anak ASD', tahun: 2024, kluster: 'Inklusif',
+                subjek: 'Caregiver' },
+            { id: 57, judul: 'Hubungan self efficacy dengan kecemasan public speaking', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Mahasiswa' },
+            { id: 58, judul: 'Dinamika psikologis penyesuaian diri anak orang tua menikah lagi', tahun: 2024,
+                kluster: 'Keluarga', subjek: 'Anak' },
+            { id: 59, judul: 'Hubungan fashion involvement dengan impulse buying mahasiswa', tahun: 2024, kluster: 'Digital',
+                subjek: 'Mahasiswa' },
+            { id: 60, judul: 'Hubungan efikasi diri dengan keputusan kuliah merantau', tahun: 2024, kluster: 'Organisasi',
+                subjek: 'Mahasiswa' },
+            { id: 61, judul: 'Peran guru BK dalam membantu perencanaan karir siswa', tahun: 2024, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            // 2025
+            { id: 62, judul: 'Pengaruh koping stres terhadap kesejahteraan psikologis orang tua ABK', tahun: 2025,
+                kluster: 'Inklusif', subjek: 'Orang Tua' },
+            { id: 63, judul: 'Hubungan kecemasan terhadap self-diagnosis mahasiswa psikologi', tahun: 2025,
+                kluster: 'Positif', subjek: 'Mahasiswa' },
+            { id: 64, judul: 'Psikodinamika self harm pada mahasiswa psikologi', tahun: 2025, kluster: 'Positif',
+                subjek: 'Mahasiswa' },
+            { id: 65, judul: 'Hubungan pola asuh otoriter terhadap perilaku agresif remaja', tahun: 2025,
+                kluster: 'Keluarga', subjek: 'Remaja' },
+            { id: 66, judul: 'Fenomenologi body dissatisfaction remaja wanita', tahun: 2025, kluster: 'Perkembangan',
+                subjek: 'Remaja' },
+            { id: 67, judul: 'Kesejahteraan psikologis santri pengabdian', tahun: 2025, kluster: 'Psikologi Islam',
+                subjek: 'Santri' },
+            { id: 68, judul: 'Pengaruh penerimaan diri orang tua terhadap pengembangan anak tunagrahita', tahun: 2025,
+                kluster: 'Inklusif', subjek: 'Orang Tua' },
+            { id: 69, judul: 'Dampak abusive language terhadap perkembangan perilaku siswa', tahun: 2025,
+                kluster: 'Perkembangan', subjek: 'Siswa' },
+            { id: 70, judul: 'Hubungan self-efficacy dengan stres akademik mahasiswa rantau', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Mahasiswa' },
+            { id: 71, judul: 'Pengaruh self control terhadap adiksi game online siswa', tahun: 2025, kluster: 'Digital',
+                subjek: 'Siswa' },
+            { id: 72, judul: 'Analisis kematangan emosi pasangan usia dini pasca pernikahan', tahun: 2025,
+                kluster: 'Keluarga', subjek: 'Pasangan' },
+            { id: 73, judul: 'Hubungan self-control terhadap kepatuhan diri santri', tahun: 2025, kluster: 'Psikologi Islam',
+                subjek: 'Santri' },
+            { id: 74, judul: 'Hubungan self-regulation dengan prokrastinasi akademik siswa', tahun: 2025,
+                kluster: 'Pendidikan', subjek: 'Siswa' },
+            { id: 75, judul: 'Hubungan dukungan teman sebaya dengan school well-being', tahun: 2025, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            { id: 76, judul: 'Pengaruh regulasi emosi terhadap subjective well-being remaja', tahun: 2025,
+                kluster: 'Perkembangan', subjek: 'Remaja' },
+            { id: 77, judul: 'Hubungan dukungan keluarga dengan penyesuaian diri santri baru', tahun: 2025,
+                kluster: 'Psikologi Islam', subjek: 'Santri' },
+            { id: 78, judul: 'Hubungan fatherless dengan konsep diri mahasiswa psikologi', tahun: 2025, kluster: 'Keluarga',
+                subjek: 'Mahasiswa' },
+            { id: 79, judul: 'Hubungan stres terhadap emotional eating mahasiswa', tahun: 2025, kluster: 'Positif',
+                subjek: 'Mahasiswa' },
+            { id: 80, judul: 'Hubungan self efficacy dan dukungan sosial dengan kecemasan skripsi', tahun: 2025,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 81, judul: 'Pengaruh toxic friendship terhadap self esteem mahasiswa', tahun: 2025, kluster: 'Sosial',
+                subjek: 'Mahasiswa' },
+            { id: 82, judul: 'Hubungan regulasi emosi terhadap mekanisme koping dismenore', tahun: 2025,
+                kluster: 'Perkembangan', subjek: 'Mahasiswi' },
+            { id: 83, judul: 'Pengaruh intensitas TikTok dan pola tidur terhadap stres akademik', tahun: 2025,
+                kluster: 'Digital', subjek: 'Mahasiswa' },
+            { id: 84, judul: 'Perilaku konsumen dalam keputusan pembelian kopi', tahun: 2025, kluster: 'Organisasi',
+                subjek: 'Konsumen' },
+            { id: 85, judul: 'Pengaruh intensitas bermedia sosial dan self-awareness terhadap kepuasan hidup', tahun: 2025,
+                kluster: 'Digital', subjek: 'Mahasiswa' },
+            { id: 86, judul: 'Hubungan kualitas tidur dan sarapan pagi terhadap konsentrasi belajar', tahun: 2025,
+                kluster: 'Pendidikan', subjek: 'Siswa' },
+            { id: 87, judul: 'Dampak fatherless terhadap cara Gen Z memilih pasangan', tahun: 2025, kluster: 'Keluarga',
+                subjek: 'Generasi Z' },
+            { id: 88, judul: 'Hubungan dukungan sosial dengan kesejahteraan psikologis remaja', tahun: 2025,
+                kluster: 'Positif', subjek: 'Remaja' },
+            { id: 89, judul: 'Hubungan self monitoring terhadap perilaku prososial siswa', tahun: 2025, kluster: 'Sosial',
+                subjek: 'Siswa' },
+            { id: 90, judul: 'Makna simbol beras kunyit pada pesta adat', tahun: 2025, kluster: 'Sosial',
+                subjek: 'Masyarakat' },
+            { id: 91, judul: 'Pengaruh regulasi emosi terhadap prokrastinasi akademik', tahun: 2025, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            { id: 92, judul: 'Hubungan gaya kepemimpinan dengan work engagement karyawan', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Karyawan' },
+            { id: 93, judul: 'Pengaruh gaya kepemimpinan otoriter terhadap kinerja karyawan', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Karyawan' },
+            { id: 94, judul: 'Korelasi self-determination dan creativity terhadap career decision making', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Mahasiswa' },
+            { id: 95, judul: 'Fenomena adiksi game online Higgs Domino pada remaja', tahun: 2025, kluster: 'Digital',
+                subjek: 'Remaja' },
+            { id: 96, judul: 'Dinamika konflik pertambangan timah: perspektif psikologi sosial', tahun: 2025,
+                kluster: 'Sosial', subjek: 'Masyarakat' },
+            { id: 97, judul: 'Hubungan self efficacy dengan kecemasan berbicara mahasiswa', tahun: 2025,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 98, judul: 'Pengaruh work-life balance terhadap kesejahteraan psikologis guru', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Guru' },
+            { id: 99, judul: 'Pengaruh konflik peran ganda terhadap stres kerja dosen wanita', tahun: 2025,
+                kluster: 'Organisasi', subjek: 'Dosen' },
+            { id: 100, judul: 'Pengaruh kartu mutaba\'ah tahfizh terhadap self-management santri', tahun: 2025,
+                kluster: 'Psikologi Islam', subjek: 'Santri' },
+            { id: 101, judul: 'Hubungan school well-being dengan prestasi belajar siswa', tahun: 2025, kluster: 'Pendidikan',
+                subjek: 'Siswa' },
+            // 2026
+            { id: 102, judul: 'Hubungan self efficacy dengan kemampuan beradaptasi mahasiswa baru', tahun: 2026,
+                kluster: 'Pendidikan', subjek: 'Mahasiswa' },
+            { id: 103, judul: 'Hubungan fatherless dengan self-control siswa', tahun: 2026, kluster: 'Keluarga',
+                subjek: 'Siswa' },
+            { id: 104, judul: 'Pengaruh FoMO terhadap kesejahteraan subjektif mahasiswa', tahun: 2026, kluster: 'Digital',
+                subjek: 'Mahasiswa' },
+            { id: 105, judul: 'Hubungan kepercayaan diri dengan kebahagiaan remaja panti asuhan', tahun: 2026,
+                kluster: 'Positif', subjek: 'Remaja' },
+            { id: 106, judul: 'Pengaruh e-commerce Shopee terhadap perilaku konsumtif mahasiswa', tahun: 2026,
+                kluster: 'Digital', subjek: 'Mahasiswa' },
+            { id: 107, judul: 'Self-compassion pada anak gepeng korban bullying', tahun: 2026, kluster: 'Sosial',
+                subjek: 'Anak' },
+            { id: 108, judul: 'Pengaruh perkembangan sosial dan emosional terhadap stres akademik', tahun: 2026,
+                kluster: 'Perkembangan', subjek: 'Siswa' },
+            { id: 109, judul: 'Hubungan peran ayah terhadap kematangan emosi siswa', tahun: 2026, kluster: 'Keluarga',
+                subjek: 'Siswa' },
+            { id: 110, judul: 'Pengaruh pelatihan manajemen stres terhadap stres kerja karyawan', tahun: 2026,
+                kluster: 'Organisasi', subjek: 'Karyawan' },
+            { id: 111, judul: 'Penerimaan diri orang tua pada anak stunting', tahun: 2026, kluster: 'Inklusif',
+                subjek: 'Orang Tua' },
+            { id: 112, judul: 'Analisis dampak psikologis pemain judi online slot', tahun: 2026, kluster: 'Digital',
+                subjek: 'Pemain' },
+            { id: 113, judul: 'Hubungan pola asuh overprotektif dengan konsep diri siswa', tahun: 2026, kluster: 'Keluarga',
+                subjek: 'Siswa' },
+            { id: 114, judul: 'Hubungan body image dengan coping stress mahasiswi', tahun: 2026, kluster: 'Perkembangan',
+                subjek: 'Mahasiswi' },
+            { id: 115, judul: 'Pengaruh kualitas tidur terhadap konsentrasi belajar siswa', tahun: 2026,
+                kluster: 'Pendidikan', subjek: 'Siswa' },
+            { id: 116, judul: 'Dampak psikologis pernikahan usia dini pada remaja perempuan', tahun: 2026,
+                kluster: 'Keluarga', subjek: 'Remaja' },
+            { id: 117, judul: 'Hubungan intensitas game online dengan komunikasi interpersonal siswa', tahun: 2026,
+                kluster: 'Digital', subjek: 'Siswa' },
+            // tambahan untuk genap 124
+            { id: 118, judul: 'Hubungan dukungan sosial dengan resiliensi remaja', tahun: 2026, kluster: 'Positif',
+                subjek: 'Remaja' },
+            { id: 119, judul: 'Pengaruh pola asuh permisif terhadap perilaku agresif anak', tahun: 2026,
+                kluster: 'Keluarga', subjek: 'Anak' },
+            { id: 120, judul: 'Hubungan kecerdasan spiritual dengan kesejahteraan psikologis', tahun: 2026,
+                kluster: 'Psikologi Islam', subjek: 'Mahasiswa' },
+            { id: 121, judul: 'Pengaruh media sosial terhadap body image remaja putri', tahun: 2026, kluster: 'Digital',
+                subjek: 'Remaja' },
+            { id: 122, judul: 'Hubungan efikasi diri dengan prestasi akademik mahasiswa', tahun: 2026, kluster: 'Pendidikan',
+                subjek: 'Mahasiswa' },
+            { id: 123, judul: 'Dinamika psikologis korban perundungan di sekolah', tahun: 2026, kluster: 'Perkembangan',
+                subjek: 'Siswa' },
+            { id: 124, judul: 'Pengaruh regulasi emosi terhadap kualitas hubungan interpersonal', tahun: 2026,
+                kluster: 'Sosial', subjek: 'Mahasiswa' }
+        ];
+
+        // ===== DATA HEATMAP (dari similarity_table.csv) =====
+        const heatmapData = {
+            labels: ['Perkembangan', 'Keluarga', 'Digital', 'Positif', 'Organisasi', 'Pendidikan', 'Psikologi Islam',
+                'Sosial', 'Moderasi', 'Gender', 'Inklusif'
+            ],
+            matrix: [
+                [1.000, 0.412, 0.026, 0.000, 0.000, 0.011, 0.000, 0.013, 0.002, 0.000, 0.000],
+                [0.412, 1.000, 0.027, 0.075, 0.042, 0.041, 0.060, 0.064, 0.014, 0.028, 0.017],
+                [0.026, 0.027, 1.000, 0.088, 0.090, 0.059, 0.082, 0.074, 0.041, 0.031, 0.024],
+                [0.000, 0.075, 0.088, 1.000, 0.043, 0.035, 0.044, 0.096, 0.038, 0.044, 0.110],
+                [0.000, 0.042, 0.090, 0.043, 1.000, 0.010, 0.000, 0.039, 0.016, 0.006, 0.000],
+                [0.011, 0.041, 0.059, 0.035, 0.010, 1.000, 0.024, 0.045, 0.009, 0.000, 0.000],
+                [0.000, 0.060, 0.082, 0.044, 0.000, 0.024, 1.000, 0.046, 0.001, 0.000, 0.000],
+                [0.013, 0.064, 0.074, 0.096, 0.039, 0.045, 0.046, 1.000, 0.009, 0.002, 0.000],
+                [0.002, 0.014, 0.041, 0.038, 0.016, 0.009, 0.001, 0.009, 1.000, 0.000, 0.000],
+                [0.000, 0.028, 0.031, 0.044, 0.006, 0.000, 0.000, 0.002, 0.000, 1.000, 0.000],
+                [0.000, 0.017, 0.024, 0.110, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.000]
+            ]
+        };
+
+        // ===== RENDER HEATMAP =====
+        function renderHeatmap() {
+            const tbody = document.getElementById('heatmapBody');
+            tbody.innerHTML = '';
+            const labels = heatmapData.labels;
+            const matrix = heatmapData.matrix;
+
+            labels.forEach((label, i) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-white/5 hover:bg-white/5 transition';
+                let rowHtml = `<td class="p-2 text-left font-bold text-white text-xs">${label}</td>`;
+                matrix[i].forEach(val => {
+                    const color = val >= 0.7 ? 'bg-emerald-500/40 text-emerald-200' :
+                        val >= 0.5 ? 'bg-emerald-500/25 text-emerald-300' :
+                        val >= 0.3 ? 'bg-amber-500/20 text-amber-300' :
+                        val >= 0.1 ? 'bg-amber-500/10 text-amber-400' :
+                        'bg-navy-700/30 text-slate-500';
+                    rowHtml +=
+                        `<td class="p-1"><span class="hm-cell ${color} block">${(val * 100).toFixed(0)}%</span></td>`;
+                });
+                tr.innerHTML = rowHtml;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ===== RENDER TABEL SKRIPSI =====
+        function renderSkripsiTable(filterKluster = 'all', search = '') {
+            const tbody = document.getElementById('skripsiTableBody');
+            tbody.innerHTML = '';
+
+            let filtered = skripsiData;
+            if (filterKluster !== 'all') {
+                filtered = filtered.filter(item => item.kluster === filterKluster);
+            }
+            if (search) {
+                filtered = filtered.filter(item =>
+                    item.judul.toLowerCase().includes(search.toLowerCase()) ||
+                    item.subjek.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML =
+                    `<tr><td colspan="5" class="text-center text-slate-500 py-4">Tidak ada data.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-white/5 hover:bg-white/5 transition';
+                const klusterBadge = `<span class="badge-kluster">${item.kluster}</span>`;
+                tr.innerHTML = `
+                    <td class="text-center font-mono text-gold font-bold">${index + 1}</td>
+                    <td class="text-left text-white text-xs">${item.judul}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.tahun}</td>
+                    <td class="text-center">${klusterBadge}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.subjek}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterTable() {
+            const kluster = document.getElementById('filterKluster').value;
+            const search = document.getElementById('searchSkripsi').value;
+            renderSkripsiTable(kluster, search);
+        }
+
+        // ===== RENDER CHARTS =====
+        function renderCharts() {
+            // 1. Distribusi per Tahun
+            const tahunCount = {};
+            skripsiData.forEach(item => {
+                tahunCount[item.tahun] = (tahunCount[item.tahun] || 0) + 1;
+            });
+            const tahunLabels = Object.keys(tahunCount).sort();
+            const tahunValues = tahunLabels.map(y => tahunCount[y]);
+
+            const ctxTahun = document.getElementById('tahunChart').getContext('2d');
+            new Chart(ctxTahun, {
+                type: 'bar',
+                data: {
+                    labels: tahunLabels,
+                    datasets: [{
+                        label: 'Jumlah Skripsi',
+                        data: tahunValues,
+                        backgroundColor: ['#D4AF37', '#60a5fa', '#34d399', '#f59e0b'],
+                        borderRadius: 6,
+                        barThickness: 50,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' skripsi' } }
+                    },
+                    scales: {
+                        y: { min: 0, max: 45, ticks: { color: '#94a3b8', stepSize: 10 },
+                            grid: { color: 'rgba(255,255,255,0.04)' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+
+            // 2. Distribusi per Kluster
+            const klusterCount = {};
+            skripsiData.forEach(item => {
+                klusterCount[item.kluster] = (klusterCount[item.kluster] || 0) + 1;
+            });
+            // Urutkan berdasarkan jumlah terbanyak
+            const sortedKluster = Object.entries(klusterCount).sort((a, b) => b[1] - a[1]);
+            const klusterLabels = sortedKluster.map(k => k[0]);
+            const klusterValues = sortedKluster.map(k => k[1]);
+            const colors = ['#D4AF37', '#60a5fa', '#34d399', '#f59e0b', '#a78bfa', '#f472b6', '#4FC3F7', '#81C784', '#FFB74D',
+                '#CE93D8', '#EF5350'
+            ];
+
+            const ctxKluster = document.getElementById('klusterChart').getContext('2d');
+            new Chart(ctxKluster, {
+                type: 'doughnut',
+                data: {
+                    labels: klusterLabels,
+                    datasets: [{
+                        data: klusterValues,
+                        backgroundColor: colors.slice(0, klusterLabels.length),
+                        borderWidth: 3,
+                        borderColor: '#060F28',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#94a3b8', boxWidth: 10, font: { size: 8 } }
+                        }
+                    },
+                    cutout: '55%',
+                }
+            });
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHeatmap();
+            renderSkripsiTable();
+            renderCharts();
+        });
+    </script>
+
+</body>
+</html>
