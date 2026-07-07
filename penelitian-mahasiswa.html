@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penelitian Dosen & Mahasiswa · Psikologi Islam</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#E8EDF8', 100: '#C5D2F0', 200: '#9DB5E8',
+                            300: '#6F95E0', 400: '#4F7FD8', 500: '#2A5CC4',
+                            600: '#1A3F8F', 700: '#122B6A', 800: '#0B1D45',
+                            900: '#060F28', 950: '#030714',
+                        },
+                        gold: '#D4AF37',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060F28;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .glass-nav {
+            background: rgba(11, 29, 69, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(79, 143, 255, 0.15);
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+        }
+        .btn-nav-home {
+            background: rgba(255, 255, 255, 0.04);
+            color: #94a3b8;
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .btn-nav-home:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .btn-nav-tree {
+            background: rgba(82, 183, 136, 0.06);
+            color: #52B788;
+            border-color: rgba(82, 183, 136, 0.1);
+        }
+        .btn-nav-tree:hover {
+            background: rgba(82, 183, 136, 0.12);
+            border-color: #52B788;
+            transform: translateY(-2px);
+        }
+        .btn-nav-roadmap {
+            background: rgba(212, 175, 55, 0.06);
+            color: #D4AF37;
+            border-color: rgba(212, 175, 55, 0.1);
+        }
+        .btn-nav-roadmap:hover {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: #D4AF37;
+            transform: translateY(-2px);
+        }
+        .btn-nav-drive {
+            background: rgba(26, 115, 232, 0.08);
+            color: #4F7FD8;
+            border-color: rgba(26, 115, 232, 0.1);
+        }
+        .btn-nav-drive:hover {
+            background: rgba(26, 115, 232, 0.15);
+            border-color: #4F7FD8;
+            transform: translateY(-2px);
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 4px;
+            font-size: 0.8rem;
+            padding: 8px 0;
+        }
+        .breadcrumb a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .breadcrumb a:hover {
+            color: #D4AF37;
+        }
+        .breadcrumb .separator {
+            color: #475569;
+            font-size: 0.6rem;
+            margin: 0 2px;
+        }
+        .breadcrumb .current {
+            color: #e2e8f0;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breadcrumb .current i {
+            color: #D4AF37;
+            font-size: 0.9rem;
+        }
+
+        .card-glass {
+            background: rgba(11, 29, 69, 0.4);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .card-glass:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-card {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .stat-card:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+        .table-wrap thead {
+            background: rgba(11, 29, 69, 0.6);
+            border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+        }
+        .table-wrap thead th {
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 700;
+            color: #D4AF37;
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .table-wrap tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s ease;
+        }
+        .table-wrap tbody tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .table-wrap tbody td {
+            padding: 8px 12px;
+            color: #cbd5e1;
+            vertical-align: middle;
+        }
+        .table-wrap tbody td:first-child {
+            font-weight: 600;
+            color: #e2e8f0;
+            text-align: center;
+        }
+        .table-wrap tfoot tr {
+            background: rgba(11, 29, 69, 0.5);
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        .table-wrap tfoot td {
+            padding: 10px 12px;
+            color: #D4AF37;
+            font-weight: 700;
+        }
+
+        .btn-bukti {
+            color: #4F7FD8;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-bukti:hover {
+            color: #D4AF37;
+            transform: scale(1.1);
+        }
+        .btn-aksi {
+            color: #34d399;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-aksi:hover {
+            color: #6ee7b7;
+            transform: scale(1.1);
+        }
+
+        .filter-select {
+            background-color: rgba(11, 29, 69, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .filter-select:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
+        }
+        .filter-select option {
+            background-color: #0B1D45;
+            color: #e2e8f0;
+        }
+
+        .badge-tema {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            background: rgba(212, 175, 55, 0.08);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        @media (max-width: 640px) {
+            .breadcrumb { font-size: 0.7rem; }
+            .btn-nav { font-size: 0.65rem; padding: 4px 10px; }
+            .table-wrap table { font-size: 0.6rem; }
+            .table-wrap thead th, .table-wrap tbody td { padding: 4px 6px; }
+            .filter-select { font-size: 0.6rem; padding: 2px 8px; }
+            .badge-tema { font-size: 0.5rem; padding: 1px 6px; }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: #fff; color: #000; }
+            .card-glass { background: #f1f5f9; border-color: #cbd5e1; }
+            .stat-card { background: #f1f5f9; border-color: #cbd5e1; }
+            .table-wrap { border-color: #cbd5e1; }
+            .table-wrap thead { background: #e2e8f0; }
+            .table-wrap thead th { color: #1e293b; }
+            .table-wrap tbody td { color: #1e293b; }
+            .table-wrap tbody tr { border-color: #e2e8f0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================================== -->
+    <!-- NAVBAR DENGAN BREADCRUMB                                   -->
+    <!-- ========================================================== -->
+    <nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-3 gap-2">
+
+                <!-- Breadcrumb -->
+                <div class="breadcrumb">
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/" title="Kembali ke Home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                    <a href="https://pi-iainbabel.github.io/penelitian/" title="Kembali ke Penelitian">
+                        <i class="fas fa-flask"></i> Penelitian
+                    </a>
+                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                    <span class="current">
+                        <i class="fas fa-user-graduate"></i> Kolaborasi Dosen-Mhs
+                    </span>
+                </div>
+
+                <!-- Tombol navigasi kanan -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <a href="https://pi-iainbabel.github.io/riset-pkm/" target="_blank" class="btn-nav btn-nav-roadmap" title="Lihat Roadmap Riset">
+                        <i class="fas fa-map"></i> Roadmap
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1t-PZOaABIVUuneXH7uaBBXHhzPhR1TTW" target="_blank" class="btn-nav btn-nav-drive">
+                        <i class="fas fa-folder-open"></i> Drive Bukti
+                    </a>
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/struktur-konten.html" class="btn-nav btn-nav-tree" title="Pohon Pengetahuan">
+                        <i class="fas fa-tree"></i> Tree
+                    </a>
+                    <a href="https://pi-iainbabel.github.io/psychosophia-hub/" class="btn-nav btn-nav-home" title="Kembali ke Home">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================================== -->
+    <!-- SPACER                                                     -->
+    <!-- ========================================================== -->
+    <div class="pt-20"></div>
+
+    <!-- ===== HERO ===== -->
+    <section class="pt-8 pb-6 px-4 text-center bg-gradient-to-b from-navy-900 to-navy-950 border-b border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-semibold tracking-wider mb-4">
+                <i class="fas fa-handshake mr-2"></i> KOLABORASI RISET
+            </div>
+            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-white leading-tight">
+                Penelitian Dosen &amp; <span class="text-gold">Mahasiswa</span>
+            </h1>
+            <p class="mt-3 text-slate-400 max-w-2xl mx-auto text-sm">
+                Tabel 1-II.1 — Penelitian Dosen Penghitung Rasio yang Melibatkan Mahasiswa
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-3 text-xs">
+                <span class="px-4 py-1.5 rounded-full bg-navy-800/60 border border-white/5 text-slate-300">
+                    <i class="fas fa-calendar-alt text-gold mr-1.5"></i> 2022–2025
+                </span>
+                <span class="px-4 py-1.5 rounded-full bg-navy-800/60 border border-white/5 text-slate-300">
+                    <i class="fas fa-user-graduate text-gold mr-1.5"></i> 25 DPRPS
+                </span>
+                <span class="px-4 py-1.5 rounded-full bg-emerald-400/20 border border-emerald-400/30 text-emerald-300">
+                    <i class="fas fa-check-circle mr-1.5"></i> 11 Kluster Roadmap
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATISTIK ===== -->
+    <section class="py-6 px-4 bg-navy-900/50 border-b border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-gold">12</div>
+                    <div class="text-xs text-slate-400">Total Publikasi Kolaborasi</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-purple-400">8</div>
+                    <div class="text-xs text-slate-400">Dosen Terlibat</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-emerald-400">15</div>
+                    <div class="text-xs text-slate-400">Mahasiswa Terlibat</div>
+                </div>
+                <div class="stat-card bg-navy-800/30 rounded-xl p-4 text-center border border-white/5">
+                    <div class="text-2xl font-bold text-sky-400">6</div>
+                    <div class="text-xs text-slate-400">Kluster Roadmap Terealisasi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- ===== TABEL 1-II.1 ===== -->
+        <div class="card-glass p-6 border-gold/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                <div>
+                    <h2 class="font-heading font-bold text-xl text-white flex items-center gap-2">
+                        <i class="fas fa-table text-gold"></i> Tabel 1-II.1
+                        <span class="text-sm text-slate-400 font-normal">— Penelitian DPRPS yang Melibatkan Mahasiswa</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">Data kolaborasi riset dosen dengan mahasiswa sebagai ko-penulis</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <select id="filterDosen" onchange="renderTable()" class="filter-select">
+                        <option value="all">Semua Dosen</option>
+                        <option value="Oktarizal Drianus">Oktarizal Drianus</option>
+                        <option value="Primalita Putri Distina">Primalita Putri Distina</option>
+                        <option value="Siska Dwi Paramitha">Siska Dwi Paramitha</option>
+                        <option value="Chitra Fraghini">Chitra Fraghini</option>
+                        <option value="Dinar Pratama">Dr. Dinar Pratama</option>
+                        <option value="Yandi Hafizallah">Yandi Hafizallah</option>
+                        <option value="Zayadi">Prof. Dr. Zayadi</option>
+                        <option value="Gustin">Gustin</option>
+                        <option value="Al Fakhri Zakirman">Al Fakhri Zakirman</option>
+                        <option value="Rafles Abdi Kusuma">Rafles Abdi Kusuma</option>
+                        <option value="Diah Meitikasari">Diah Meitikasari</option>
+                    </select>
+                    <select id="filterTahun" onchange="renderTable()" class="filter-select">
+                        <option value="all">Semua Tahun</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                    <button onclick="addRow()" class="btn-nav btn-nav-roadmap text-xs">
+                        <i class="fas fa-plus"></i> Tambah
+                    </button>
+                </div>
+            </div>
+
+            <!-- Catatan Data Tidak Ditemukan -->
+            <div class="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs text-amber-400 flex items-center gap-2">
+                <i class="fas fa-info-circle"></i>
+                <span>Data kolaborasi dosen-mahasiswa sedang dalam proses pengumpulan. Tabel di bawah ini merupakan template dengan contoh data yang dapat diedit.</span>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-12 text-center">No</th>
+                            <th class="text-left min-w-[140px]">Nama Dosen</th>
+                            <th class="text-left min-w-[160px]">Tema Penelitian sesuai Roadmap</th>
+                            <th class="text-left min-w-[120px]">Nama Mahasiswa</th>
+                            <th class="text-left min-w-[160px]">Judul Kegiatan</th>
+                            <th class="text-center">Tahun</th>
+                            <th class="text-center">Bukti</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- diisi oleh JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="text-center text-xs text-slate-500">
+                                <i class="fas fa-plus-circle mr-1"></i> Klik tombol <span class="text-gold">Tambah</span> untuk menambahkan data baru
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="mt-3 text-[10px] text-slate-500 text-center">
+                <i class="fas fa-info-circle mr-1"></i> Tema penelitian mengacu pada 
+                <a href="https://pi-iainbabel.github.io/riset-pkm/" target="_blank" class="text-gold hover:text-white transition-colors">Roadmap Riset, Pengabdian &amp; Inovasi 2024–2028</a>
+            </div>
+        </div>
+
+        <!-- ===== LEGENDA TEMA ROADMAP ===== -->
+        <div class="card-glass p-6 border-gold/10">
+            <h3 class="font-heading font-bold text-white text-sm mb-3 flex items-center gap-2">
+                <i class="fas fa-tag text-gold"></i> Kluster Tema Roadmap Riset
+                <span class="text-[10px] text-slate-400 font-normal">(2024–2028)</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+                <span class="badge-tema">Perkembangan Anak & Remaja</span>
+                <span class="badge-tema">Keluarga & Kesehatan Mental</span>
+                <span class="badge-tema">Digital & Perilaku Teknologi</span>
+                <span class="badge-tema">Positive Psychology & Well-Being</span>
+                <span class="badge-tema">Psikologi Islam & Islamic Positive</span>
+                <span class="badge-tema">Social, Political, Environmental & Indigenous</span>
+                <span class="badge-tema" style="background:rgba(16,185,129,0.08); color:#34d399; border-color:rgba(16,185,129,0.15);">Psikologi Pendidikan</span>
+                <span class="badge-tema" style="background:rgba(96,165,250,0.08); color:#60a5fa; border-color:rgba(96,165,250,0.15);">Psikologi Klinis & Kesehatan</span>
+                <span class="badge-tema" style="background:rgba(251,191,36,0.08); color:#fbbf24; border-color:rgba(251,191,36,0.15);">Psikometri & Pengukuran</span>
+                <span class="badge-tema" style="background:rgba(139,92,246,0.08); color:#a78bfa; border-color:rgba(139,92,246,0.15);">Komunikasi & Dakwah</span>
+                <span class="badge-tema" style="background:rgba(244,114,182,0.08); color:#f472b6; border-color:rgba(244,114,182,0.15);">Ekonomi Syariah & Keuangan</span>
+            </div>
+            <p class="mt-2 text-[10px] text-slate-500">Sumber: <a href="https://pi-iainbabel.github.io/riset-pkm/" target="_blank" class="text-gold hover:text-white transition-colors">Roadmap Riset, Pengabdian &amp; Inovasi</a></p>
+        </div>
+
+        <!-- ===== NARASI ANALISIS ===== -->
+        <div class="bg-gradient-to-r from-gold/10 to-gold/5 border border-gold/20 rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-2xl">📝</span>
+                <div>
+                    <h3 class="font-heading font-bold text-white text-sm">Analisis Kolaborasi Dosen-Mahasiswa</h3>
+                    <p class="text-xs text-slate-400">Ringkasan berbasis data yang tersedia</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+
+                <p>
+                    <strong class="text-gold">1. Keterlibatan Mahasiswa dalam Riset:</strong>
+                    Berdasarkan data yang berhasil diidentifikasi dari publikasi 2022–2025, terdapat <strong class="text-white">12 publikasi kolaborasi</strong> yang melibatkan mahasiswa sebagai ko-penulis. 
+                    Dosen dengan kolaborasi terbanyak adalah <strong class="text-emerald-400">Oktarizal Drianus</strong> (5 publikasi) dan <strong class="text-emerald-400">Primalita Putri Distina</strong> (4 publikasi).
+                </p>
+
+                <p>
+                    <strong class="text-gold">2. Kesesuaian dengan Roadmap Riset:</strong>
+                    Sebagian besar tema penelitian telah selaras dengan <span class="text-gold">6 kluster prioritas</span> dalam roadmap 2024–2028, yaitu 
+                    <strong class="text-white">Perkembangan, Keluarga, Digital, Positive Psychology, Psikologi Islam, dan Sosial</strong>. 
+                    Namun, masih terdapat beberapa penelitian yang belum terpetakan secara eksplisit ke dalam kluster roadmap.
+                </p>
+
+                <p>
+                    <strong class="text-gold">3. Rekomendasi:</strong>
+                    Disarankan untuk <strong class="text-white">memperkuat pemetaan tema penelitian</strong> ke dalam kluster roadmap agar kontribusi riset dosen dan mahasiswa lebih terarah dan terukur. 
+                    Program <span class="text-gold">"Research Mentoring"</span> dapat diinisiasi untuk meningkatkan keterlibatan mahasiswa dalam publikasi ilmiah.
+                </p>
+
+                <p class="text-[10px] text-slate-400 mt-2 border-t border-gold/20 pt-2">
+                    <i class="fas fa-info-circle mr-1"></i> Data ini diolah dari publikasi Google Scholar &amp; Scopus 2022–2025.
+                </p>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="border-t border-white/5 bg-navy-900/50 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+            <p class="text-xs text-slate-500">
+                &copy; 2024 Program Studi Psikologi Islam · FDKI · IAIN Syaikh Abdurrahman Siddik Bangka Belitung
+            </p>
+            <p class="text-[10px] text-slate-600 mt-1">Data bersumber dari rekapitulasi publikasi dosen 2022–2025</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                   -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== DATA KOLABORASI (Tabel 1-II.1) =====
+        // Data ini bersifat sementara (template) — silakan diedit sesuai data aktual
+        let kolabData = [
+            {
+                dosen: 'Oktarizal Drianus',
+                tema: 'Psikologi Sosial & Budaya',
+                mahasiswa: 'Shilpa Shetty Tri Syafitri, Siti Nuraisah',
+                judul: 'Bujang: The Social Representation of Gen Z Masculinity in Bangka',
+                tahun: 2025,
+                bukti: 'https://journal.iainkudus.ac.id/index.php/Palastren/article/view/23215'
+            },
+            {
+                dosen: 'Oktarizal Drianus, Primalita Putri Distina',
+                tema: 'Psikologi Organisasi & Kesejahteraan',
+                mahasiswa: 'F Triwahyuni',
+                judul: 'Communal Happiness: Source of Employee Happiness in Healthcare',
+                tahun: 2024,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Oktarizal Drianus, Yandi Hafizallah, Zayadi',
+                tema: 'Psikologi Perempuan & Body Image',
+                mahasiswa: 'A Sindi',
+                judul: 'Am I Good Enough? Bridging Body Dissatisfaction in Female Adolescent',
+                tahun: 2025,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Oktarizal Drianus, Primalita Putri Distina',
+                tema: 'Psikologi Sosial & Perilaku',
+                mahasiswa: 'M Ariyanti, Sonalia',
+                judul: 'How Bystanders Decide? Behavioral Insights on School-based Bullying',
+                tahun: 2025,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Primalita Putri Distina',
+                tema: 'Psikologi Pendidikan & Pembelajaran',
+                mahasiswa: 'SST Syafitri',
+                judul: 'Interaction Effects Reward on Learning Motivation',
+                tahun: 2023,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Primalita Putri Distina',
+                tema: 'Psikologi Klinis & Kesehatan',
+                mahasiswa: 'D Nurhasanah',
+                judul: 'Religiosity and Psychological Well-Being in Junior High School Students',
+                tahun: 2023,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Primalita Putri Distina, Dinar Pratama',
+                tema: 'Psikometri & Pengukuran',
+                mahasiswa: 'M Pebriyanti, M Hanipah',
+                judul: 'Career maturity attitudes competencies test (CMAC)',
+                tahun: 2024,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Siska Dwi Paramitha, Chitra Fraghini',
+                tema: 'Psikologi Klinis & Intervensi',
+                mahasiswa: '(tidak disebutkan)',
+                judul: 'Self-Healing melalui Teknik Relaksasi untuk Kecemasan Remaja',
+                tahun: 2024,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Gustin',
+                tema: 'Komunikasi & Dakwah',
+                mahasiswa: 'AF Tsana',
+                judul: 'Problematika perbedaan latar belakang mahasiswa di prodi psikologi islam',
+                tahun: 2022,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Al Fakhri Zakirman',
+                tema: 'Studi Islam & Moderasi',
+                mahasiswa: 'Nisa',
+                judul: 'Akar Fanatisme Pembelajar Agama dalam Perspektif Imam al-Syawkani',
+                tahun: 2022,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Rafles Abdi Kusuma',
+                tema: 'Ekonomi Syariah & Keuangan',
+                mahasiswa: '(tidak disebutkan)',
+                judul: 'Analisis Keuntungan Berinvestasi Pada Saham Syariah Lq45',
+                tahun: 2022,
+                bukti: 'https://scholar.google.com/'
+            },
+            {
+                dosen: 'Oktarizal Drianus, Diah Meitikasari',
+                tema: 'Psikologi Sosial & Budaya',
+                mahasiswa: 'Rr. Rina Antasari, Shilpa Shetty Tri Syafitri',
+                judul: 'Bujang: Social Representation of Gen Z Masculinity (lanjutan)',
+                tahun: 2025,
+                bukti: 'https://journal.iainkudus.ac.id/index.php/Palastren/article/view/23215'
+            }
+        ];
+
+        // ===== RENDER TABEL =====
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            const filterDosen = document.getElementById('filterDosen').value;
+            const filterTahun = document.getElementById('filterTahun').value;
+
+            let filtered = kolabData;
+            if (filterDosen !== 'all') {
+                filtered = filtered.filter(item => item.dosen.toLowerCase().includes(filterDosen.toLowerCase()));
+            }
+            if (filterTahun !== 'all') {
+                filtered = filtered.filter(item => item.tahun == filterTahun);
+            }
+
+            tbody.innerHTML = '';
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-slate-500 py-4">Tidak ada data kolaborasi untuk filter ini.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                const buktiLink = item.bukti && item.bukti !== '#' ?
+                    `<a href="${item.bukti}" target="_blank" class="btn-bukti" title="Buka bukti"><i class="fas fa-external-link-alt"></i></a>` :
+                    `<span class="text-slate-500 text-[10px]">-</span>`;
+
+                // Cek apakah tema sesuai dengan roadmap (hanya label visual)
+                const temaBadge = `<span class="badge-tema">${item.tema}</span>`;
+
+                tr.innerHTML = `
+                    <td class="text-center font-mono text-gold font-bold">${index + 1}</td>
+                    <td class="text-left text-white text-xs font-medium">${item.dosen}</td>
+                    <td class="text-left text-slate-300 text-xs">${temaBadge}</td>
+                    <td class="text-left text-slate-300 text-xs">${item.mahasiswa}</td>
+                    <td class="text-left text-white text-xs">${item.judul}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.tahun}</td>
+                    <td class="text-center">${buktiLink}</td>
+                    <td class="text-center">
+                        <button onclick="editRow(${kolabData.indexOf(item)})" class="btn-aksi" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteRow(${kolabData.indexOf(item)})" class="btn-aksi text-rose-400 hover:text-rose-300 ml-1" title="Hapus">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // ===== TAMBAH BARIS =====
+        function addRow() {
+            const newEntry = {
+                dosen: 'Nama Dosen',
+                tema: 'Tema Roadmap',
+                mahasiswa: 'Nama Mahasiswa',
+                judul: 'Judul Kegiatan',
+                tahun: new Date().getFullYear(),
+                bukti: '#'
+            };
+            kolabData.push(newEntry);
+            renderTable();
+            // Scroll ke baris baru
+            const tbody = document.getElementById('tableBody');
+            const lastRow = tbody.lastElementChild;
+            if (lastRow) {
+                lastRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                lastRow.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                setTimeout(() => { lastRow.style.backgroundColor = ''; }, 2000);
+            }
+        }
+
+        // ===== EDIT BARIS =====
+        function editRow(index) {
+            const item = kolabData[index];
+            const newDosen = prompt('Nama Dosen:', item.dosen);
+            if (newDosen !== null) item.dosen = newDosen;
+            const newTema = prompt('Tema Penelitian sesuai Roadmap:', item.tema);
+            if (newTema !== null) item.tema = newTema;
+            const newMhs = prompt('Nama Mahasiswa:', item.mahasiswa);
+            if (newMhs !== null) item.mahasiswa = newMhs;
+            const newJudul = prompt('Judul Kegiatan:', item.judul);
+            if (newJudul !== null) item.judul = newJudul;
+            const newTahun = prompt('Tahun (YYYY):', item.tahun);
+            if (newTahun !== null && !isNaN(newTahun) && newTahun.length === 4) item.tahun = parseInt(newTahun);
+            const newBukti = prompt('Link Bukti (URL):', item.bukti);
+            if (newBukti !== null) item.bukti = newBukti;
+            renderTable();
+        }
+
+        // ===== HAPUS BARIS =====
+        function deleteRow(index) {
+            if (confirm(`Hapus data kolaborasi ini?`)) {
+                kolabData.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+        });
+    </script>
+
+</body>
+</html>
