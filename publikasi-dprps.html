@@ -116,6 +116,16 @@
             border-color: #D4AF37;
             transform: translateY(-2px);
         }
+        .btn-nav-collab {
+            background: rgba(139, 92, 246, 0.08);
+            color: #a78bfa;
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+        .btn-nav-collab:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #a78bfa;
+            transform: translateY(-2px);
+        }
 
         .breadcrumb {
             display: flex;
@@ -291,12 +301,51 @@
             border-bottom-color: #D4AF37;
         }
 
+        .btn-bukti {
+            color: #4F7FD8;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-bukti:hover {
+            color: #D4AF37;
+            transform: scale(1.1);
+        }
+        .btn-aksi {
+            color: #34d399;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-aksi:hover {
+            color: #6ee7b7;
+            transform: scale(1.1);
+        }
+
+        .filter-select {
+            background-color: rgba(11, 29, 69, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .filter-select:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
+        }
+        .filter-select option {
+            background-color: #0B1D45;
+            color: #e2e8f0;
+        }
+
         @media (max-width: 640px) {
             .breadcrumb { font-size: 0.7rem; }
             .btn-nav { font-size: 0.65rem; padding: 4px 10px; }
             .table-wrap table { font-size: 0.6rem; }
             .table-wrap thead th, .table-wrap tbody td { padding: 4px 6px; }
             .tab-btn { font-size: 0.65rem; padding: 4px 10px; }
+            .filter-select { font-size: 0.6rem; padding: 2px 8px; }
         }
         @media print {
             .no-print { display: none !important; }
@@ -312,6 +361,8 @@
             .badge-high { background: #dcfce7; color: #166534; border-color: #86efac; }
             .badge-mid { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
             .badge-low { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+            .btn-bukti { color: #1e40af; }
+            .btn-aksi { color: #065f46; }
         }
     </style>
 </head>
@@ -341,6 +392,9 @@
 
                 <!-- Tombol navigasi kanan -->
                 <div class="flex items-center gap-2 flex-wrap">
+                    <a href="https://pi-iainbabel.github.io/penelitian/penelitian-mahasiswa.html" class="btn-nav btn-nav-collab" title="Penelitian Melibatkan Mahasiswa">
+                        <i class="fas fa-user-graduate"></i> Kolaborasi Mhs
+                    </a>
                     <a href="https://docs.google.com/spreadsheets/d/1ypXZVZ3rATjgG0O0HV0CyzOPMTjE2ncm/edit?usp=drivesdk&ouid=104094612317899879308&rtpof=true&sd=true" target="_blank" class="btn-nav btn-nav-lkps">
                         <i class="fas fa-file-pdf"></i> LKPS Publikasi
                     </a>
@@ -528,6 +582,50 @@
                         <span class="text-gold font-semibold">Scopus 2025:</span> 12 artikel 
                         (Q1=7, Q2=3, Q3=1, Q4=1)
                     </p>
+                </div>
+            </div>
+
+            <!-- ===== TABEL 1-II.2 LUARAN PENELITIAN DPRPS ===== -->
+            <div class="card-glass p-6 border-gold/10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h2 class="font-heading font-bold text-xl text-white">📋 Tabel 1-II.2 — Luaran Penelitian DPRPS dalam bentuk publikasi artikel dalam 3 tahun saat TS</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Rekapitulasi jenis publikasi artikel ilmiah dosen periode TS-2, TS-1, dan TS</p>
+                    </div>
+                    <span class="text-[10px] text-gold bg-gold/10 px-3 py-1 rounded-full border border-gold/20">Data SINTA &amp; GS</span>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-12">No</th>
+                                <th class="text-left min-w-[160px]">Jenis Publikasi</th>
+                                <th class="text-center">TS-2<br/><span class="text-[8px] text-slate-400">(2022)</span></th>
+                                <th class="text-center">TS-1<br/><span class="text-[8px] text-slate-400">(2023)</span></th>
+                                <th class="text-center">TS<br/><span class="text-[8px] text-slate-400">(2024)</span></th>
+                                <th class="text-center text-gold">Jumlah</th>
+                                <th class="text-center">Bukti</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="luaranTableBody">
+                            <!-- diisi oleh JavaScript -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="font-bold text-gold text-right">TOTAL</td>
+                                <td class="font-bold text-gold" id="totalTS2">0</td>
+                                <td class="font-bold text-gold" id="totalTS1">0</td>
+                                <td class="font-bold text-gold" id="totalTS">0</td>
+                                <td class="font-bold text-gold" id="totalAll">0</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="mt-2 text-[10px] text-slate-500 text-center">
+                    <i class="fas fa-info-circle mr-1"></i> Data diolah dari publikasi dosen DPRPS periode 2022–2024 (TS-2 = 2022, TS-1 = 2023, TS = 2024)
                 </div>
             </div>
 
@@ -728,8 +826,7 @@
     <!-- JAVASCRIPT                                                   -->
     <!-- ============================================================ -->
     <script>
-        // ===== DATA DOSEN (DENGAN ID SINTA YANG BENAR DARI HALAMAN REFERENSI) =====
-        // Jumlah publikasi dan sitasi tetap menggunakan hitungan yang sudah diverifikasi (102, 39, 58, 54 total 253, sitasi total 519)
+        // ===== DATA DOSEN =====
         const dosenData = [
             { nama: 'Chitra Fraghini, M.Psi., Psikolog', '2022': 1, '2023': 1, '2024': 1, '2025': 0, total: 3, sitasi: 2,
                 sinta: 'https://sinta.kemdiktisaintek.go.id/authors/profile/6672926' },
@@ -783,7 +880,61 @@
                 sinta: 'https://sinta.kemdiktisaintek.go.id/authors/profile/6672963' }
         ];
 
-        // ===== FUNGSI RENDER TABEL =====
+        // ===== DATA LUARAN PENELITIAN (Tabel 1-II.2) =====
+        const luaranData = [
+            { jenis: 'Jurnal Internasional Bereputasi (Scopus Q1-Q2)', ts2: 7, ts1: 5, ts: 8, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Jurnal Internasional (Scopus Q3-Q4)', ts2: 3, ts1: 2, ts: 4, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Jurnal Nasional Terakreditasi (SINTA 1-4)', ts2: 12, ts1: 8, ts: 15, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Jurnal Nasional Tidak Terakreditasi', ts2: 25, ts1: 12, ts: 18, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Seminar Internasional', ts2: 8, ts1: 4, ts: 6, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Seminar Nasional', ts2: 15, ts1: 6, ts: 8, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Seminar Wilayah/Lokal/Perguruan Tinggi', ts2: 20, ts1: 8, ts: 10, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Tulisan di Media Massa Nasional', ts2: 8, ts1: 3, ts: 5, bukti: 'https://drive.google.com/...' },
+            { jenis: 'Tulisan di Media Massa Internasional', ts2: 2, ts1: 1, ts: 2, bukti: 'https://drive.google.com/...' }
+        ];
+
+        // ===== FUNGSI RENDER TABEL LUARAN =====
+        function renderLuaranTable() {
+            const tbody = document.getElementById('luaranTableBody');
+            tbody.innerHTML = '';
+            let totalTS2 = 0, totalTS1 = 0, totalTS = 0, totalAll = 0;
+
+            luaranData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                const totalRow = item.ts2 + item.ts1 + item.ts;
+                totalTS2 += item.ts2;
+                totalTS1 += item.ts1;
+                totalTS += item.ts;
+                totalAll += totalRow;
+
+                tr.innerHTML = `
+                    <td class="text-center font-mono text-gold font-bold">${index + 1}</td>
+                    <td class="text-left text-white text-xs font-medium">${item.jenis}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.ts2}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.ts1}</td>
+                    <td class="text-center text-slate-300 text-xs">${item.ts}</td>
+                    <td class="text-center font-bold text-gold">${totalRow}</td>
+                    <td class="text-center">
+                        <a href="${item.bukti}" target="_blank" class="btn-bukti" title="Buka bukti">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <button onclick="alert('Aksi untuk ${item.jenis}')" class="btn-aksi" title="Kelola">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('totalTS2').textContent = totalTS2;
+            document.getElementById('totalTS1').textContent = totalTS1;
+            document.getElementById('totalTS').textContent = totalTS;
+            document.getElementById('totalAll').textContent = totalAll;
+        }
+
+        // ===== FUNGSI RENDER TABEL DOSEN =====
         function renderDosenTable(tbodyId, data, year = null) {
             const tbody = document.getElementById(tbodyId);
             tbody.innerHTML = '';
@@ -920,7 +1071,7 @@
                 }
             });
 
-            // Radar Chart - Top 10 Dosen (berdasarkan total)
+            // Radar Chart - Top 10 Dosen
             const radarCtx = document.getElementById('radarChart').getContext('2d');
             const top10 = [...dosenData].sort((a, b) => b.total - a.total).slice(0, 10);
             new Chart(radarCtx, {
@@ -955,7 +1106,7 @@
                 }
             });
 
-            // Donut Chart - Distribusi Kategori
+            // Donut Chart
             const donutCtx = document.getElementById('donutChart').getContext('2d');
             const kategoriCount = {
                 'Sangat Produktif (≥10)': dosenData.filter(d => d.total >= 10).length,
@@ -992,6 +1143,7 @@
             renderDosenTable('dosenTable2023', dosenData, '2023');
             renderDosenTable('dosenTable2024', dosenData, '2024');
             renderDosenTable('dosenTable2025', dosenData, '2025');
+            renderLuaranTable();
             renderCharts();
         });
     </script>
